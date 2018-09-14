@@ -14,7 +14,7 @@ RUN useradd -m openwrt &&\
 USER openwrt
 WORKDIR /home/openwrt
 
+VOLUME /home/openwrt
+
 # add build files
 COPY build/ /home/openwrt
-
-VOLUME /home/openwrt
