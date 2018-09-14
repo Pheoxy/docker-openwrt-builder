@@ -1,0 +1,4 @@
+source/*
+output/*
+make.log
+openwrt-archer-c7-v2-builder.code-workspace
