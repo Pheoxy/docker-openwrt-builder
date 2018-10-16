@@ -1,10 +1,9 @@
 #!/bin/bash
-# Build an updated Archer C7 V2 Openwrt Image
+# Build openwrt in docker container
 
 # Enviroment
-BUILDDIR=~/Development/openwrt-archer-c7-v2-builder
-MAKECORES=6
-GIT_BRANCH=master
+BUILDDIR=~/
+GIT_BRANCH=openwrt-18.06
 
 # Stop on error
 set -e
@@ -38,16 +37,11 @@ else
 
 fi
 
-#cp -r ../files ./
+# Make output folders
+mkdir -p $BUILDDIR/output
 
 # Copy old config
 cp $BUILDDIR/config.seed $BUILDDIR/source/.config
-
-# Patch & customize
-#for patchfile in `ls ../patches`; do
-#    echo "Applying patch: $patchfile"
-#    patch -p1 < ../patches/$patchfile
-#done
 
 # Compile
 ./scripts/diffconfig.sh > diffconfig
@@ -55,18 +49,12 @@ cp diffconfig .config # write changes to .config
 make defconfig;make oldconfig
 make menuconfig
 make download
-make -j$MAKECORES V=s > ../output/make.log
+make V=s > ../output/make.log
 
 # Cleaning up for git
-mkdir -p $BUILDDIR/output
-#rm -rf $BUILDDIR/openwrt-archer-c7-v2/files/*
-#rm -f $BUILDDIR/openwrt-archer-c7-v2/patches/*
-#cp $BUILDDIR/patches/* $BUILDDIR/openwrt-archer-c7-v2/patches/
-#cp -r $BUILDDIR/files/* $BUILDDIR/openwrt-archer-c7-v2/files/
 cp $BUILDDIR/source/.config $BUILDDIR/output/config.seed.new
-cp $BUILDDIR/source/bin/targets/ath79/generic/* $BUILDDIR/output/
+cp $BUILDDIR/source/bin/targets/* $BUILDDIR/output/
 
-echo "Copied files to $BUILDDIR/openwrt-archer-c7-v2"
 echo "Build Success!"
 
 exit 0

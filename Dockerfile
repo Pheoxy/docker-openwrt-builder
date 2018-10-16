@@ -17,4 +17,4 @@ WORKDIR /home/openwrt
 VOLUME /home/openwrt
 
 # add build files
-COPY build/ /home/openwrt
+ADD build/* /home/openwrt
