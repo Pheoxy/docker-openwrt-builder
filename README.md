@@ -14,18 +14,27 @@ docker run \
 -itd \
 --name=openwrt-builder \
 -e PUID=<UID> -e PGID=<GID> \
--e TZ=<timezone> \
+-v /etc/localtime:/etc/localtime:ro \
 -v </path/to/config>:/home/openwrt \
 pheoxy/openwrt-builder
 ```
 
 ## Building
 
-You will need to get shell access `docker exec -it openwrt-builder /bin/bash` so that you can start building.
+You will need to get shell access so that you can start building.
+```
+docker exec -it openwrt-builder /bin/bash
+```
 
-Build commands are:
+Now just download the openwrt source now that the build envrioment is setup, commands are:
 
 ```
+git clone https://git.openwrt.org/openwrt/openwrt.git/
+cd openwrt
+
+./scripts/feeds update -a
+./scripts/feeds install -a
+
 make menuconfig
 make
 ```
@@ -34,8 +43,27 @@ make
 
 * `-e PGID=` for for GroupID - see below for explanation
 * `-e PUID=` for for UserID - see below for explanation
-* `-e TZ` - for timezone information *eg Europe/London, etc*
-* `-v /home/openwrt` - openwrt-builder Source Location. *This can grow very large, 300M+ is likely for a large collection.*
+* `-v /etc/localtime:/etc/localtime:ro` - for timezone information from host
+* `-v /home/openwrt` - openwrt-builder Source Location. *This can grow very large, 1G+ is likely for a large collection.*
+
+## Setup ccache (**_Recommended_**)
+Update symlinks within docker container:
+
+```
+sudo /usr/sbin/update-ccache-symlinks
+```
+
+Set ccache into the enviroment `PATH`
+
+```
+echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a ~/.bashrc
+```
+
+Set source `bashrc` to test the new `PATH`
+
+```
+source ~/.bashrc && echo $PATH
+```
 
 ### User / Group Identifiers
 
@@ -55,4 +83,5 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 
 ## Versions
 
++ **13.03.19:** Fixes for build environment and add ccache
 + **15.09.18:** Initial Build.

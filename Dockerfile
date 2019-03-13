@@ -1,20 +1,15 @@
 FROM ubuntu:18.04
-LABEL maintainer "Daniel Hancock <pheoxy@gmail.com>"
+LABEL maintainer "Pheoxy"
 
-RUN \
-    echo "**** Install build dependencies ****" && \
-    apt-get update &&\
-    apt-get install -y sudo time git-core subversion build-essential gcc-multilib libssl-dev\
-                       libncurses5-dev zlib1g-dev gawk flex gettext wget unzip python &&\
+RUN apt-get update && \
+    apt-get install -y build-essential libncurses5-dev python unzip gawk wget sudo git ccache && \
     apt-get clean
 
-RUN useradd -m openwrt &&\
+RUN useradd -m openwrt && \
     echo 'openwrt ALL=NOPASSWD: ALL' > /etc/sudoers.d/openwrt
 
-USER openwrt
 WORKDIR /home/openwrt
 
 VOLUME /home/openwrt
 
-# add build files
-ADD build/* /home/openwrt
+USER openwrt
