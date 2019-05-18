@@ -82,6 +82,6 @@ In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as bel
 * To monitor the logs of the container in realtime: `docker logs -f openwrt-builder`
 
 ## Versions
-
++ **19.05.19:** Upgrade base to Ubuntu 19.04 for gcc 8.3.0 and binutils 2.32
 + **13.03.19:** Fixes for build environment and add ccache
 + **15.09.18:** Initial Build.
