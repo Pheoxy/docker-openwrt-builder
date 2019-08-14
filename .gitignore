@@ -1,2 +1,4 @@
 openwrt/*
 .vscode/*
+run.sh
+docker-compose.yml

@@ -9,7 +9,5 @@ RUN useradd -m openwrt && \
     echo 'openwrt ALL=NOPASSWD: ALL' > /etc/sudoers.d/openwrt
 
 WORKDIR /home/openwrt
-
 VOLUME /home/openwrt
-
 USER openwrt
