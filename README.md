@@ -29,7 +29,7 @@ docker exec -it openwrt-builder /bin/bash
 Now just download the openwrt source now that the build envrioment is setup, commands are:
 
 ```
-git clone https://git.openwrt.org/openwrt/openwrt.git/
+git clone https://git.openwrt.org/openwrt/openwrt.git
 cd openwrt
 
 ./scripts/feeds update -a
