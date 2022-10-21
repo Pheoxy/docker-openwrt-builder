@@ -29,4 +29,4 @@ jobs:
         -e ${{ env.MENU_CONFIG }} \
         -e ${{ env.DEBUG }} \
         pheoxy/openwrt-builder:latest \
-        /bin/bash -c "/source/build.sh"
+        /bin/bash -c "${openwrtSrc}/build.sh"
