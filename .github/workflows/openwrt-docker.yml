@@ -7,17 +7,16 @@ on:
     branches: [ "main" ]
 
 jobs:
+  call-workflow-local-docker-image:
+    uses:  openwrt-camelot/.github/workflows/docker-image.yml@main
   build:
-    
     env:
       BUILD_TARGET: archerc7v2
       OLD_CONFIG: y
       EXTRA_CONFIG: n
       MENU_CONFIG: n
       DEBUG: n
-
     runs-on: pheoxy/openwrt-builder-base:latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Build the target in the openwrt-builder container
