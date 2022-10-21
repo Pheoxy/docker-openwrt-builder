@@ -25,3 +25,4 @@ jobs:
     steps:
     - name: Build the target in the openwrt-builder container
       run: /bin/bash -c "/home/openwrt-builder/source/build.sh"
+      run: /bin/bash -c "echo "hello-world""
