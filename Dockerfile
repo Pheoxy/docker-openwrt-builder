@@ -1,18 +1,21 @@
 # Inherit from github actions base image.
-FROM ghcr.io/pheoxy/openwrt-builder:master AS openwrt-builder-base
+FROM ghcr.io/pheoxy/openwrt-builder:main AS openwrt-builder-base
+
+# Set source location enviroment variable.
+ENV openwrtSrc /home/openwrt-builder/source
 
 # This is an alternative to mounting our source code and configs as a volume.
-RUN git clone https://github.com/openwrt/openwrt.git --depth 1 --branch openwrt-22.03 /source
+RUN git clone https://github.com/openwrt/openwrt.git --depth 1 --branch openwrt-22.03 ${openwrtSrc}
 
 # Update and install feeds.
-RUN ./scripts/feeds update -a
-RUN ./scripts/feeds install -a
+RUN ${openwrtSrc}/scripts/feeds update -a
+RUN ${openwrtSrc}/scripts/feeds install -a
 
-# Add BUILD_TARGET .configs to builder.
-ADD --chown=${GITHUB_ACTOR}:${BGITHUB_ACTOR} config build /source/
+# Add files builder.
+ADD --chown=openwrt-builder:openwrt-builder config build ${openwrtSrc}/
 
 # Our output volume
 VOLUME /output
 
 # Start build script.
-CMD [ "/source/build.sh" ]
+CMD [ "/bin/bash" ]
