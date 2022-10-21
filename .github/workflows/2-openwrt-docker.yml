@@ -13,7 +13,7 @@ jobs:
   build-target:
     runs-on: ubuntu-22.04
     container:
-      image: pheoxy/openwrt-camelot:main
+      image: ghcr.io/pheoxy/openwrt-camelot:main
       env:
         BUILD_TARGET: archerc7v2
         OLD_CONFIG: y
