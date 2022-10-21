@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SOURCE_PATH="/source"
-OUTPUT_PATH="/output"
+SOURCE_PATH="/home/openwrt-builder/source"
+OUTPUT_PATH="/home/openwrt-builder/output"
 
 CORES="$(nproc)"
 DATETIME="$(date +"%Y%m%d_%H%M")"
