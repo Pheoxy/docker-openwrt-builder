@@ -9,7 +9,7 @@ on:
 
 jobs:
   call-workflow-local-docker-image:
-    uses: pheoxy/openwrt-camelot/.github/workflows/docker-image.yml@main
+    uses: pheoxy/openwrt-camelot/.github/workflows/1-docker-publish.yml@main
   build:
     env:
       BUILD_TARGET: archerc7v2
