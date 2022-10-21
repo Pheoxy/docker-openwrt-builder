@@ -10,7 +10,7 @@ jobs:
 
   build:
 
-    runs-on: pheoxy/openwrt-builder:latest
+    runs-on: pheoxy/openwrt-builder:main
 
     steps:
     - uses: actions/checkout@v3
