@@ -2,7 +2,7 @@
 FROM ghcr.io/pheoxy/openwrt-builder:master AS openwrt-builder-base
 
 # This is an alternative to mounting our source code and configs as a volume.
-RUN git clone https://blacksmith.camelot.network/Camelot/openwrt.git --depth 1 --branch openwrt-22.03 /source
+RUN git clone https://github.com/openwrt/openwrt.git --depth 1 --branch openwrt-22.03 /source
 
 # Update and install feeds.
 RUN ./scripts/feeds update -a
