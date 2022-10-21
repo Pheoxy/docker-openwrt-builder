@@ -10,23 +10,19 @@ on:
 jobs:
   call-workflow-local-docker-image:
     uses: pheoxy/openwrt-camelot/.github/workflows/1-docker-publish.yml@main
-  build:
-    env:
-      BUILD_TARGET: archerc7v2
-      OLD_CONFIG: y
-      EXTRA_CONFIG: n
-      MENU_CONFIG: n
-      DEBUG: n
+  build-target:
     runs-on: ubuntu-22.04
+    container:
+      image: pheoxy/openwrt-camelot:main
+      env:
+        BUILD_TARGET: archerc7v2
+        OLD_CONFIG: y
+        EXTRA_CONFIG: n
+        MENU_CONFIG: n
+        DEBUG: n
+      volumes:
+        - /output:/home/openwrt-builder/output
     steps:
     - uses: actions/checkout@v3
     - name: Build the target in the openwrt-builder container
-      run: |
-        docker run \
-        -e ${{ env.BUILD_TARGET }} \
-        -e ${{ env.OLD_CONFIG }} \
-        -e ${{ env.EXTRA_CONFIG }} \
-        -e ${{ env.MENU_CONFIG }} \
-        -e ${{ env.DEBUG }} \
-        pheoxy/openwrt-builder:latest \
-        /bin/bash -c "/home/openwrt-builder/source/build.sh"
+      run: /bin/bash -c "/home/openwrt-builder/source/build.sh"
