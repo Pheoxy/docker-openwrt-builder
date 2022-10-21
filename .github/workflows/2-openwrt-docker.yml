@@ -23,6 +23,5 @@ jobs:
       volumes:
         - /output:/home/openwrt-builder/output
     steps:
-    - uses: actions/checkout@v3
     - name: Build the target in the openwrt-builder container
       run: /bin/bash -c "/home/openwrt-builder/source/build.sh"
