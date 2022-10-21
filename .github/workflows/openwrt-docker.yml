@@ -1,0 +1,32 @@
+name: Openwrt CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    
+    env:
+      BUILD_TARGET: archerc7v2
+      OLD_CONFIG: y
+      EXTRA_CONFIG: n
+      MENU_CONFIG: n
+      DEBUG: n
+
+    runs-on: pheoxy/openwrt-builder-base:latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the target in the openwrt-builder container
+      run: |
+        docker run \
+        -e ${{ env.BUILD_TARGET }} \
+        -e ${{ env.OLD_CONFIG }} \
+        -e ${{ env.EXTRA_CONFIG }} \
+        -e ${{ env.MENU_CONFIG }} \
+        -e ${{ env.DEBUG }} \
+        pheoxy/openwrt-builder:latest \
+        /bin/bash -c "/source/build.sh"
