@@ -1,0 +1,20 @@
+name: Openwrt CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    name: Manual
+
+jobs:
+  build-target:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Copy the target openwrt image config
+      run: cp archerc7v2/.config .config
+    - name: Build make config from target config
+      run: make defconfig
+    - name: Make image
+      run: make
