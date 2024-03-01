@@ -1,21 +1,66 @@
-# Inherit from github actions base image.
-FROM ghcr.io/pheoxy/openwrt-builder:main AS openwrt-builder-base
+# Use Alpine Linux 3.19 as the base image
+FROM alpine:3.19
 
-# Set source location enviroment variable.
-ENV openwrtSrc /home/openwrt-builder/source
+ARG OPENWRT_SOURCE_BRANCH
 
-# This is an alternative to mounting our source code and configs as a volume.
-RUN git clone https://github.com/openwrt/openwrt.git --depth 1 --branch openwrt-22.03 ${openwrtSrc}
+LABEL maintainer="Pheoxy"
+LABEL org.opencontainers.image.source=https://github.com/Pheoxy/docker-openwrt-builder
 
-# Update and install feeds.
-RUN ${openwrtSrc}/scripts/feeds update -a
-RUN ${openwrtSrc}/scripts/feeds install -a
+ENV GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# Add files builder.
-ADD --chown=openwrt-builder:openwrt-builder config build ${openwrtSrc}/
+RUN apk add --no-cache \
+    'argp-standalone' \
+    'asciidoc' \
+    'bash' \
+    'bc' \
+    'binutils' \
+    'bzip2' \
+    'cdrkit' \
+    'coreutils' \
+    'diffutils' \
+    'elfutils-dev' \
+    'findutils' \
+    'flex' \
+    'g++' \
+    'gawk' \
+    'gcc' \
+    'gettext' \
+    'git' \
+    'grep' \
+    'gzip' \
+    'intltool' \
+    'libxslt' \
+    'linux-headers' \
+    'make' \
+    'musl-fts-dev' \
+    'musl-libintl' \
+    'musl-obstack-dev' \
+    'ncurses-dev' \
+    'openssl-dev' \
+    'patch' \
+    'perl' \
+    'python3-dev' \
+    'rsync' \
+    'tar' \
+    'unzip' \
+    'util-linux' \
+    'wget' \
+    'zlib-dev' \
+  && \
+  ln -s '/usr/lib/libncurses.so' '/usr/lib/libtinfo.so' && \
+  addgroup 'builder' && \
+  adduser -s '/bin/bash' -G 'builder' -D 'builder'
 
-# Our output volume
-VOLUME /output
+RUN mkdir /source /build /config /output
+RUN chown builder:builder /source /build /config /output
 
-# Start build script.
-CMD [ "/bin/bash" ]
+USER builder
+
+WORKDIR /source
+
+RUN git clone https://github.com/openwrt/openwrt.git -b ${OPENWRT_SOURCE_BRANCH} /source
+
+RUN ./scripts/feeds update -a
+RUN ./scripts/feeds install -a
+
+ENTRYPOINT [ "entrypoint.sh" ]
