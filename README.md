@@ -1,6 +1,7 @@
 # pheoxy/docker-openwrt-builder
 
 [![GitHub Stars](https://img.shields.io/github/stars/pheoxy/docker-openwrt-builder.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/pheoxy/docker-openwrt-builder)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/pheoxy/docker-openwrt-builder/package-build.yml?style=for-the-badge&logo=github&logoColor=ffffff&label=pheoxy&labelColor=555555)](https://github.com/Pheoxy/docker-openwrt-builder/actions)
 [![GitHub Package Repository](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=pheoxy&message=GitHub%20Package&logo=github)](https://github.com/pheoxy/docker-openwrt-builder/packages)
 
 ![OpenWrt Project](https://openwrt.org/lib/tpl/openwrt/images/logo.png)
