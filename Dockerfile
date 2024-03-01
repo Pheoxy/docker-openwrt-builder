@@ -1,7 +1,7 @@
 # Use Alpine Linux 3.19 as the base image
 FROM alpine:3.19
 
-ARG OPENWRT_SOURCE_BRANCH
+ARG OPENWRT_SOURCE_BRANCH=openwrt-23.05
 
 LABEL maintainer="Pheoxy"
 LABEL org.opencontainers.image.source=https://github.com/Pheoxy/docker-openwrt-builder
@@ -58,7 +58,7 @@ USER builder
 
 WORKDIR /source
 
-RUN git clone https://github.com/openwrt/openwrt.git -b ${OPENWRT_SOURCE_BRANCH} /source
+RUN git clone https://github.com/openwrt/openwrt.git -b $OPENWRT_SOURCE_BRANCH /source
 
 RUN ./scripts/feeds update -a
 RUN ./scripts/feeds install -a
