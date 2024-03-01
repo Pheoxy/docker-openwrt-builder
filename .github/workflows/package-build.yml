@@ -7,7 +7,7 @@ on:
 # Defines two custom environment variables for the workflow, registry domain and a name for the Docker image that this workflow builds.
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: openwrt-builder
+  IMAGE_NAME: pheoxy/openwrt-builder
 
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
