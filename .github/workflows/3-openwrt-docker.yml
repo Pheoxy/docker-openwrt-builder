@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ "main" ]
   workflow_dispatch:
+    name: Manual
 
 jobs:
   call-workflow-local-docker-image:
@@ -14,14 +15,9 @@ jobs:
     runs-on: ubuntu-22.04
     container:
       image: ghcr.io/pheoxy/openwrt-camelot:main
-      env:
-        BUILD_TARGET: archerc7v2
-        OLD_CONFIG: y
-        EXTRA_CONFIG: n
-        MENU_CONFIG: n
-        DEBUG: n
-      volumes:
-        - /output:/home/openwrt-builder/output
     steps:
     - name: Build the target in the openwrt-builder container
-      run: /bin/bash -c "/home/openwrt-builder/source/build.sh"
+      run: /bin/bash -c "cd /home/openwrt-builder/source && \
+           cp archerc7v2/.config .config && \
+           make defconfig && \
+           make"
